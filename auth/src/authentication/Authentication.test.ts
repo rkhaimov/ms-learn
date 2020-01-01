@@ -26,7 +26,7 @@ describe('Authentication is in charge of verifying that given credentials is exi
         expect(actualToken).toBe(token);
     });
 
-    it('should not login user but throw 403', async () => {
+    it('should not login user but throw 401', async () => {
         const { repository, authentication, userFromOutside, throw401 } = setup();
         repository.getByCredentials.mockRejectedValue(undefined);
 
@@ -35,7 +35,7 @@ describe('Authentication is in charge of verifying that given credentials is exi
         expect(throw401).toHaveBeenCalled();
     });
 
-    it('should verify user from token', async () => {
+    it('should verify user session', async () => {
         const { authentication, token, authToken, permit, deny } = setup();
         authToken.hasExpired.mockReturnValue(false);
 
@@ -45,7 +45,7 @@ describe('Authentication is in charge of verifying that given credentials is exi
         expect(deny).not.toHaveBeenCalled();
     });
 
-    it('should deny access when invalid token has been passed', async () => {
+    it('should deny access when invalid session has been passed', async () => {
         const { authentication, token, authToken, permit, deny } = setup();
         authToken.hasExpired.mockReturnValue(true);
 
