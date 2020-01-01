@@ -1,3 +1,5 @@
+import { UnknownFunc } from '../misc/types-utils';
+
 export interface IUserRepository {
     getByCredentials(name: IUser['name'], password: IUser['password']): Promise<IUser>;
 }
@@ -9,4 +11,4 @@ export interface IUser {
 
 export type HashPasswordFunc = (password: string) => string;
 export type CreateTokenFunc = (user: IUser) => string;
-export type Throw403Fun = () => unknown;
+export type Throw403Fun = UnknownFunc;
