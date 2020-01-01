@@ -9,3 +9,4 @@ export interface IUser {
 
 export type HashPasswordFunc = (password: string) => string;
 export type CreateTokenFunc = (user: IUser) => string;
+export type Throw403Fun = () => unknown;

@@ -26,6 +26,15 @@ describe('Authentication is in charge of verifying that given credentials is exi
         expect(createToken).toHaveBeenCalledWith(userFromStorage);
         expect(actualToken).toBe(expectedToken);
     });
+
+    it('should not login user but throw 403', async () => {
+        const { repository, authentication, userFromOutside, throw403 } = setup();
+        repository.getByCredentials.mockRejectedValue(undefined);
+
+        await authentication.authenticate(userFromOutside.name, userFromOutside.password);
+
+        expect(throw403).toHaveBeenCalled();
+    });
 });
 
 function setup() {
@@ -33,12 +42,14 @@ function setup() {
     const repository = new UserRepository();
     const hashPassword = jest.fn();
     const createToken = jest.fn();
+    const throw403 = jest.fn();
 
     return {
-        authentication: new Authentication(repository, hashPassword, createToken),
+        authentication: new Authentication(repository, hashPassword, createToken, throw403),
         createToken,
         hashPassword,
         repository,
+        throw403,
         hashedPassword: getString(),
         expectedToken: getString(),
         userFromStorage: {
