@@ -1,14 +1,13 @@
 import { Authentication } from './Authentication';
-import { IUserRepository } from './types';
+import { IAuthToken, IUserRepository } from './types';
 import { createStringsGenerator } from '../misc/test-utils';
 
 describe('Authentication is in charge of verifying that given credentials is existing in the system', () => {
     it('should login existing user', async () => {
         const {
             repository,
-            hashPassword,
+            authToken,
             authentication,
-            createToken,
             userFromStorage,
             hashedPassword,
             userFromOutside,
@@ -16,14 +15,14 @@ describe('Authentication is in charge of verifying that given credentials is exi
         } = setup();
 
         repository.getByCredentials.mockResolvedValue(userFromStorage);
-        hashPassword.mockReturnValue(hashedPassword);
-        createToken.mockReturnValue(token);
+        authToken.hash.mockReturnValue(hashedPassword);
+        authToken.create.mockReturnValue(token);
 
         const actualToken = await authentication.authenticate(userFromOutside.name, userFromOutside.password);
 
-        expect(hashPassword).toHaveBeenCalledWith(userFromOutside.password);
+        expect(authToken.hash).toHaveBeenCalledWith(userFromOutside.password);
         expect(repository.getByCredentials).toHaveBeenCalledWith(userFromOutside.name, hashedPassword);
-        expect(createToken).toHaveBeenCalledWith(userFromStorage);
+        expect(authToken.create).toHaveBeenCalledWith(userFromStorage);
         expect(actualToken).toBe(token);
     });
 
@@ -37,8 +36,8 @@ describe('Authentication is in charge of verifying that given credentials is exi
     });
 
     it('should verify user from token', async () => {
-        const { authentication, token, hasExpired, permit, deny } = setup();
-        hasExpired.mockReturnValue(false);
+        const { authentication, token, authToken, permit, deny } = setup();
+        authToken.hasExpired.mockReturnValue(false);
 
         await authentication.authenticateFromToken(token, permit, deny);
 
@@ -47,8 +46,8 @@ describe('Authentication is in charge of verifying that given credentials is exi
     });
 
     it('should deny access when invalid token has been passed', async () => {
-        const { authentication, token, hasExpired, permit, deny } = setup();
-        hasExpired.mockReturnValue(true);
+        const { authentication, token, authToken, permit, deny } = setup();
+        authToken.hasExpired.mockReturnValue(true);
 
         await authentication.authenticateFromToken(token, permit, deny);
 
@@ -60,17 +59,13 @@ describe('Authentication is in charge of verifying that given credentials is exi
 function setup() {
     const getString = createStringsGenerator();
     const repository = new UserRepository();
-    const hashPassword = jest.fn();
-    const hasExpired = jest.fn();
-    const createToken = jest.fn();
+    const authToken = new AuthToken();
     const throw401 = jest.fn();
 
     return {
-        authentication: new Authentication(repository, hashPassword, createToken, throw401, hasExpired),
-        createToken,
-        hasExpired,
-        hashPassword,
+        authentication: new Authentication(repository, authToken, throw401),
         repository,
+        authToken,
         throw401,
         hashedPassword: getString(),
         token: getString(),
@@ -87,6 +82,12 @@ function setup() {
     };
 }
 
-export class UserRepository implements IUserRepository {
+class UserRepository implements IUserRepository {
     getByCredentials = jest.fn();
+}
+
+class AuthToken implements IAuthToken {
+    create = jest.fn();
+    hasExpired = jest.fn();
+    hash = jest.fn();
 }

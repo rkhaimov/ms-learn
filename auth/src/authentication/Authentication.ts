@@ -1,25 +1,23 @@
-import { CreateTokenFunc, HashPasswordFunc, IUser, IUserRepository, Throw403Fun } from './types';
+import { IAuthToken, IUser, IUserRepository, Throw403Fun } from './types';
 import { UnknownFunc } from '../misc/types-utils';
 
 export class Authentication {
     constructor(
         private repository: IUserRepository,
-        private hashPassword: HashPasswordFunc,
-        private createToken: CreateTokenFunc,
+        private authToken: IAuthToken,
         private throw401: Throw403Fun,
-        private hasExpired: (token: string) => unknown,
     ) {}
 
     authenticate(name: IUser['name'], password: IUser['password']): Promise<string | unknown> {
-        const hashed = this.hashPassword(password);
+        const hashed = this.authToken.hash(password);
 
         return this.repository.getByCredentials(name, hashed)
-            .then(user => this.createToken(user))
+            .then(user => this.authToken.create(user))
             .catch(() => this.throw401());
     }
 
     authenticateFromToken(token: string, pass: UnknownFunc, deny: UnknownFunc): void {
-        if (this.hasExpired(token)) {
+        if (this.authToken.hasExpired(token)) {
             deny();
         } else {
             pass();
