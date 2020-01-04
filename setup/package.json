@@ -13,5 +13,17 @@
   "bugs": {
     "url": "https://github.com/rkhaimov/ms-learn/issues"
   },
-  "homepage": "https://github.com/rkhaimov/ms-learn#readme"
+  "homepage": "https://github.com/rkhaimov/ms-learn#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/jest": "^24.0.25",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.4",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4"
+  }
 }
