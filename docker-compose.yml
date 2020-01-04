@@ -9,6 +9,6 @@ services:
   todo:
     build:
       context: todo
-      dockerfile: Dockerfile
+      dockerfile: setup/Dockerfile
     ports:
       - 4001:4001

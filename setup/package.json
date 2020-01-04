@@ -1,0 +1,17 @@
+{
+  "name": "@ms-learn/setup",
+  "version": "1.0.0",
+  "description": "Build and run time configurations",
+  "main": "",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rkhaimov/ms-learn.git"
+  },
+  "author": "rkhaimov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rkhaimov/ms-learn/issues"
+  },
+  "homepage": "https://github.com/rkhaimov/ms-learn#readme"
+}
