@@ -1,29 +1,30 @@
 {
   "name": "@ms-learn/setup",
-  "version": "1.0.0",
+  "version": "1.1.12",
   "description": "Build and run time configurations",
   "main": "",
-  "scripts": {},
+  "scripts": {
+    "prepublish": "jest",
+    "postinstall": "ts-node --project ./tsconfig.json postinstall.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rkhaimov/ms-learn.git"
   },
   "author": "rkhaimov",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/rkhaimov/ms-learn/issues"
   },
   "homepage": "https://github.com/rkhaimov/ms-learn#readme",
   "dependencies": {
-    "express": "^4.17.1"
-  },
-  "devDependencies": {
     "@types/express": "^4.17.2",
     "@types/jest": "^24.0.25",
+    "express": "^4.17.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4",
     "jest": "^24.9.0",
     "ts-jest": "^24.2.0",
-    "ts-node": "^8.5.4",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.4"
+    "tslint": "^5.20.1"
   }
 }
