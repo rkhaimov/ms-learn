@@ -1,8 +1,7 @@
 export interface IPackageParser {
     getPackageJSON(): IPackageJSON;
-    getWorkDir(): string;
-    copyServerPresetsTo(path: string): void;
-    copyClientPresetsTo(path: string): void;
+    copyServerPresets(): void;
+    copyClientPresets(): void;
 }
 
 export interface IPackageJSON { type: PackageType; }

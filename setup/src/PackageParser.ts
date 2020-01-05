@@ -3,31 +3,32 @@ import fs from 'fs';
 import { IPackageJSON, IPackageParser } from './types';
 
 export class PackageParser implements IPackageParser {
-    copyClientPresetsTo(to: string): void {
+    constructor(private packagePath: string, private setupPath: string) {}
+
+    copyClientPresets(): void {
         throw new Error('Not implemented');
     }
 
-    copyServerPresetsTo(to: string): void {
-        PATHS.SERVER.forEach(configPath => fs.copyFileSync(configPath, path.resolve(to, path.basename(configPath))));
+    copyServerPresets(): void {
+        this.getPaths()
+            .SERVER.forEach(configPath => fs.copyFileSync(configPath, path.resolve(this.packagePath, path.basename(configPath))));
     }
 
     getPackageJSON(): IPackageJSON {
-        return require(path.resolve(this.getWorkDir(), 'package.json'));
+        return require(path.resolve(this.packagePath, 'package.json'));
     }
 
-    getWorkDir(): string {
-        return process.env.INIT_CWD as string;
+    private getPaths() {
+        const BASE = path.resolve(this.setupPath, 'presets');
+
+        return {
+            SERVER: [
+                path.resolve(BASE, 'server', 'Dockerfile'),
+                path.resolve(BASE, 'server', 'tsconfig.json'),
+                path.resolve(BASE, 'server', 'tslint.json'),
+                path.resolve(BASE, 'jest.config.js'),
+            ],
+            CLIENT: [],
+        };
     }
 }
-
-const BASE = path.resolve(__dirname, '..', 'presets');
-
-const PATHS = {
-    SERVER: [
-        path.resolve(BASE, 'server', 'Dockerfile'),
-        path.resolve(BASE, 'server', 'tsconfig.json'),
-        path.resolve(BASE, 'server', 'tslint.json'),
-        path.resolve(BASE, 'jest.config.js'),
-    ],
-    CLIENT: [],
-};

@@ -5,12 +5,12 @@ export class Setup {
 
     do() {
         if (this.isServerPackage()) {
-            this.parser.copyServerPresetsTo(this.parser.getWorkDir());
+            this.parser.copyServerPresets();
 
             return;
         }
 
-        this.parser.copyClientPresetsTo(this.parser.getWorkDir());
+        this.parser.copyClientPresets();
     }
 
     private isServerPackage() {
