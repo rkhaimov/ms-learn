@@ -12,6 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ms-learn/setup": "^1.3.0"
+    "@ms-learn/setup": "1.3.1"
   }
 }

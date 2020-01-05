@@ -1,4 +1,4 @@
-export const createStringsGenerator = () => {
+export const genString = (() => {
     let call = 0;
 
     return () => {
@@ -6,6 +6,4 @@ export const createStringsGenerator = () => {
 
         return '='.repeat(call);
     };
-};
-
-export const getLastReturn = (mock: jest.Mock) => mock.mock.results[mock.mock.results.length - 1].value;
+})();
