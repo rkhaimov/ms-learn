@@ -1,3 +1,1 @@
-module.exports = {
-  preset: './node_modules/@ms-learn/setup/jest.config.js',
-};
+module.exports = require('@ms-learn/setup/jest.config');

@@ -7,5 +7,5 @@ app.get('/todo', (req, response) => {
 });
 
 app.listen(4001, () => {
-    console.log('Listening on port 4001')
+    process.stdout.write('Listening on port 4001\n');
 });

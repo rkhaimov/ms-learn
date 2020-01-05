@@ -1,6 +1,6 @@
 import { Authentication } from './Authentication';
 import { IAuthToken, IUserRepository } from './types';
-import { createStringsGenerator } from '../misc/test-utils';
+import { createStringsGenerator } from '@ms-learn/setup/shared';
 
 describe('Authentication is in charge of verifying that given credentials is existing in the system', () => {
     it('should login existing user', async () => {

@@ -1,5 +1,6 @@
 {
   "name": "auth",
+  "type": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,5 +10,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@ms-learn/setup": "^1.2.0"
+  }
 }
