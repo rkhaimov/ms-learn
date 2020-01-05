@@ -7,8 +7,13 @@ export class ToDo {
         return this.repository.getAll();
     }
 
-    create(todo: IToDoFromForm): Promise<IToDoFromStorage> {
-        const created = { id: 1, description: todo.description };
+    getById(id: IToDoFromStorage['id']) {
+        return this.repository.getById(id);
+    }
+
+    async create(todo: IToDoFromForm): Promise<IToDoFromStorage> {
+        const todos = await this.getAll();
+        const created = { id: todos.length, description: todo.description };
 
         return this.repository.create(created)
             .then(() => created);
