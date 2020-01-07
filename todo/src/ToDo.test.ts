@@ -1,6 +1,6 @@
 import { ToDo } from './ToDo';
 import { IToDoFromForm, IToDoStorage } from './types';
-import { InMemStorage } from './InMemStorage';
+import { InMemStorage } from '@ms-learn/setup/shared';
 import { ToDoRepository } from './ToDoRepository';
 import { genString } from '../../setup/shared';
 

@@ -1,5 +1,5 @@
 import { InMemStorage } from './InMemStorage';
-import { genString } from '@ms-learn/setup/shared';
+import { genString } from './test-utils';
 
 describe('InMemStorage provide means to store and retrieve information', () => {
     it('should set and get values', async () => {

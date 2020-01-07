@@ -1,4 +1,5 @@
-import { IStorage, IToDoFromStorage, IToDoRepository, IToDoStorage } from './types';
+import { IToDoFromStorage, IToDoRepository, IToDoStorage } from './types';
+import { IStorage } from '@ms-learn/setup/shared';
 
 export class ToDoRepository implements IToDoRepository {
     constructor(private storage: IStorage<IToDoStorage>) {}
