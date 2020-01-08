@@ -9,7 +9,7 @@ export interface IToDoFromForm {
 }
 
 export interface IToDoFromStorage extends IToDoFromForm {
-    id: number;
+    id: string;
 }
 
 export interface IToDoStorage {

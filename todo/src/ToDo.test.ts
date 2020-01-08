@@ -1,8 +1,7 @@
+import { genString, InMemStorage } from '@ms-learn/setup/shared';
 import { ToDo } from './ToDo';
-import { IToDoFromForm, IToDoStorage } from './types';
-import { InMemStorage } from '@ms-learn/setup/shared';
 import { ToDoRepository } from './ToDoRepository';
-import { genString } from '../../setup/shared';
+import { IToDoFromForm, IToDoStorage } from './types';
 
 describe('ToDo is in charge of manipulating to do items', () => {
     it('should add, getById and getAll todo item', async () => {

@@ -1,10 +1,4 @@
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
-  globals: {
-    'ts-jest': {
-      isolatedModules: true
-    },
-  },
-  transformIgnorePatterns: ['@ms-learn/shared']
+  testEnvironment: 'node'
 };
