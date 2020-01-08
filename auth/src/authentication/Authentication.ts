@@ -1,23 +1,23 @@
-import { IUserFromStorage, IPublicUser, IUsersStorage } from './types';
+import { IUserFromFormAndStorage, IPublicUser, IUsersStorage } from './types';
 import { IStorage } from '@ms-learn/setup/shared';
 
 export class Authentication {
-    static USER_NOT_FOUND = '401';
+    static UNAUTHORIZED = '401';
 
     constructor(private storage: IStorage<IUsersStorage>) {}
 
-    async register(name: IUserFromStorage['name'], password: IUserFromStorage['password']) {
+    async register(user: IUserFromFormAndStorage) {
         const users = await this.storage.get('users');
 
-        return this.storage.set('users', users.concat({ name, password } as IUserFromStorage));
+        return this.storage.set('users', users.concat(user));
     }
 
-    async login(name: IUserFromStorage['name'], password: IUserFromStorage['password']): Promise<string> {
+    async login({ password }: IUserFromFormAndStorage): Promise<string> {
         const users = await this.storage.get('users');
         const current = users.find(user => user.password === password);
 
         if (current === undefined) {
-            throw new Error(Authentication.USER_NOT_FOUND);
+            throw new Error(Authentication.UNAUTHORIZED);
         }
 
         const prepared = { name: current.name };
@@ -25,7 +25,11 @@ export class Authentication {
         return Promise.resolve(this.encode(prepared));
     }
 
-    parse(token: string): IPublicUser {
+    parse(token?: string): IPublicUser {
+        if (token === undefined) {
+            throw new Error(Authentication.UNAUTHORIZED);
+        }
+
         const decoded = Buffer.from(token, 'base64');
 
         return JSON.parse(decoded.toString());

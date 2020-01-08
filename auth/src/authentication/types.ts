@@ -1,4 +1,4 @@
-export interface IUserFromStorage {
+export interface IUserFromFormAndStorage {
     name: string;
     password: string;
 }
@@ -8,5 +8,5 @@ export interface IPublicUser {
 }
 
 export interface IUsersStorage {
-    users: IUserFromStorage[];
+    users: IUserFromFormAndStorage[];
 }
